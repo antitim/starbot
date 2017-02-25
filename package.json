@@ -1,0 +1,25 @@
+{
+  "name": "starbot",
+  "version": "1.0.0",
+  "description": "Bot Platform",
+  "author": {
+    "name": "antitim",
+    "email": "antitim@yandex.ru",
+    "url": ""
+  },
+  "main": "index.js",
+  "keywords": [
+    "bot"
+  ],
+  "repository": "antitim/starbot",
+  "scripts": {
+    "lint": "eslint index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^2.0.1"
+  }
+}
