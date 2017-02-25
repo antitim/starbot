@@ -18,12 +18,7 @@ const Starbot = require('starbot');
 const app = require('express')();
 
 const bot = new Starbot({
-  store: 'starbot-object',
-  host: 'localhost',
-  port: '7878',
-  user: 'root',
-  password: 'pass',
-  db: '2'
+  store: 'starbot-store-object'
 });
 
 app.use('/bot/vk', bot.use('./bots/bot1', 'vk'));
