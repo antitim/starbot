@@ -1,4 +1,15 @@
 'use strict';
+const path = require('path');
+
+function smartRequire (id) {
+  let firstChar = id.slice(0,1);
+
+  if (firstChar == '.' || firstChar == '/') {
+    return require(path.resolve(__dirname, id));
+  } else {
+    return require(id);
+  }
+}
 
 class StarBot {
   constructor (settings) {
@@ -7,7 +18,7 @@ class StarBot {
     /**
      * Подключаем store
      */
-    let Store = require(settings.store);
+    let Store = smartRequire(settings.store);
     this.store = new Store(settings);
 
     this.use = (botScript, presetName) => {
@@ -21,7 +32,7 @@ class StarBot {
           /**
            * Указан путь к файлу. Загружаем файл.
            */
-          bot = require(botScript);
+          bot = smartRequire(botScript);
           break;
         case Object:
           /**
@@ -40,13 +51,13 @@ class StarBot {
        * Подключаем управляющего ботом
        */
       let botControlName = bot['botControl'];
-      let botControl = require(botControlName)(bot, store);
+      let botControl = smartRequire(botControlName)(bot, store);
 
       /**
        * Подключаем адаптер
        */
       let adapterPreset = bot[presetName];
-      let Adapter = require(adapterPreset.type);
+      let Adapter = smartRequire(adapterPreset.type);
 
       let botAdapter = new Adapter(adapterPreset, botControl);
 
