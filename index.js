@@ -4,8 +4,9 @@ const path = require('path');
 function smartRequire (id) {
   let firstChar = id.slice(0, 1);
 
-  if (firstChar == '.' || firstChar == '/') {
-    return require(path.resolve(__dirname, id));
+  if (firstChar === '.' || firstChar === '/') {
+    let dirname = path.dirname(require.main.filename);
+    return require(path.resolve(dirname, id));
   } else {
     return require(id);
   }
