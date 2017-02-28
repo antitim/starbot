@@ -2,7 +2,7 @@
 const path = require('path');
 
 function smartRequire (id) {
-  let firstChar = id.slice(0,1);
+  let firstChar = id.slice(0, 1);
 
   if (firstChar == '.' || firstChar == '/') {
     return require(path.resolve(__dirname, id));
