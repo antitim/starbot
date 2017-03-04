@@ -1,34 +1,59 @@
 # Starbot [![NPM version][npm-image]][npm-url]
 
-## Что это?
+## About
 
-Starbot - это инструмент для запуска унифицированных ботов под разные социальные платформы. 
-Функционал Starbot можно расширить за счёт внешних модулей.
+Starbot is a tool to launch a unified bots under different social platforms. 
+Starbot functionality can be expanded by external modules.
 
-## Установка
+## Installation
 
 ```sh
 $ npm install --save starbot
 ```
 
-## Использование
+## Using
 
 ```js
-const Starbot = require('starbot');
 const app = require('express')();
+const Starbot = require('starbot');
+const bodyParser = require('body-parser');
 
-const bot = new Starbot({
-  store: 'starbot-store-object'
+const bot1 = Starbot({
+  name: 'BotSmartTelegram',
+  bot: './path/to/bot',
+  store: {
+    type: 'starbot-store-object'
+  },
+  adapter: {
+    type: 'starbot-telegram-adapter',
+    token: 'token'
+  }
 });
 
-app.use('/bot/vk', bot.use('./bots/bot1', 'vk'));
+const bot2 = Starbot({
+  name: 'BotSmartVk',
+  bot: './path/to/bot',
+  store: {
+    type: 'starbot-store-object'
+  },
+  adapter: {
+    type: 'starbot-vk-adapter',
+    token: 'token',
+    groupId: 'groupId',
+    confirmCode: 'confirmCode'
+  }
+});
 
-app.listen(3000, function () {
-  onsole.log('Example app listening on port 3000!');
+app.use(bodyParser.json());
+app.use('/bot/telegram', bot1);
+app.use('/bot/vk', bot2);
+
+app.listen(80, function () {
+	console.log('Example app listening on port 80!');
 });
 ```
 
-## Лицензия
+## License
 
 MIT © [antitim](http://vk.com/antitim)
 

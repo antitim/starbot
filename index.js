@@ -1,6 +1,24 @@
 'use strict';
 const path = require('path');
 
+/**
+ * @typedef Bot
+ * @type {object}
+ * @property {string} botControl - Name of control bot module.
+ */
+
+/**
+ * @typedef Store
+ * @type {object}
+ * @property {function} get - Get user state by user ID.
+ * @property {function} set - Set user state.
+ */
+
+/**
+ * Imports module path relative to the application root
+ * @param {string} id - Path to module
+ * @returns {module}
+ */
 function smartRequire (id) {
   let firstChar = id.slice(0, 1);
 
@@ -12,59 +30,64 @@ function smartRequire (id) {
   }
 }
 
-class StarBot {
-  constructor (settings) {
-    settings = settings || {};
-
-    /**
-     * Подключаем store
-     */
-    let Store = smartRequire(settings.store);
-    this.store = new Store(settings);
-
-    this.use = (botScript, presetName) => {
-      /**
-       * Загружаем скрипт бота
-       */
-      let bot;
-
-      switch (botScript.constructor) {
-        case String:
-          /**
-           * Указан путь к файлу. Загружаем файл.
-           */
-          bot = smartRequire(botScript);
-          break;
-        case Object:
-          /**
-           * Указан объект с ботом
-           */
-          bot = botScript;
-          break;
-      }
-
-      /**
-       * Создаём инстанс store для конкретного бота
-       */
-      let store = this.store.run(bot['name']);
-
-      /**
-       * Подключаем управляющего ботом
-       */
-      let botControlName = bot['botControl'];
-      let botControl = smartRequire(botControlName)(bot, store);
-
-      /**
-       * Подключаем адаптер
-       */
-      let adapterPreset = bot[presetName];
-      let Adapter = smartRequire(adapterPreset.type);
-
-      let botAdapter = new Adapter(adapterPreset, botControl);
-
-      return botAdapter.receiver;
-    };
+module.exports = function (settings) {
+  settings = settings || {
+    store: {},
+    adapter: {}
   };
-}
 
-module.exports = StarBot;
+  /**
+   * @type {Bot}
+   */
+  let bot;
+
+  if (settings.bot) {
+    switch (settings.bot.constructor) {
+      case String:
+        bot = smartRequire(settings.bot);
+        break;
+      case Object:
+        bot = settings.bot;
+        break;
+    }
+  } else {
+    throw new Error('No bot module');
+  }
+
+  /**
+   * @type {Store}
+   */
+  let store;
+
+  if (settings.store.type) {
+    let Store = smartRequire(settings.store.type);
+    store = new Store(settings.store, settings.name);
+  } else {
+    throw new Error('No state module');
+  }
+
+  /**
+   * @type {function}
+   */
+  let botControl;
+
+  if (bot.botControl) {
+    botControl = smartRequire(bot.botControl)(bot, store);
+  } else {
+    throw new Error('No botControl module');
+  }
+
+  /**
+   * @type {function}
+   */
+  let adapter;
+
+  if (settings.store.type) {
+    let Adapter = smartRequire(settings.adapter.type);
+    adapter = Adapter(settings.adapter, botControl);
+  } else {
+    throw new Error('No adapter module');
+  }
+
+  return adapter;
+};

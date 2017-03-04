@@ -6,5 +6,8 @@
     ],
     "rules": {
         "semi": ["error", "always"]
+    },
+    "env": {
+        "mocha": true
     }
 }
