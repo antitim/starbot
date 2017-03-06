@@ -31,40 +31,49 @@ function smartRequire (id) {
 }
 
 module.exports = function (settings) {
-  settings = settings || {
-    store: {},
-    adapter: {}
-  };
+  settings = settings || {};
 
-  /**
-   * @type {Bot}
-   */
-  let bot;
-
-  if (settings.bot) {
-    switch (settings.bot.constructor) {
-      case String:
-        bot = smartRequire(settings.bot);
-        break;
-      case Object:
-        bot = settings.bot;
-        break;
-    }
-  } else {
-    throw new Error('No bot module');
+  if (!settings.store) {
+    throw new Error('Not specified store in settings');
   }
+
+  if (!settings.bot) {
+    throw new Error('Not specified bot in settings');
+  }
+
+  if (!settings.adapter) {
+    throw new Error('Not specified adapter in settings');
+  }
+
+  if (settings.store.constructor === String) {
+    settings.store = {
+      type: settings.store
+    };
+  }
+
+  if (settings.bot.constructor === String) {
+    settings.bot = {
+      path: settings.adapter
+    };
+  }
+
+  if (settings.adapter.constructor === String) {
+    settings.adapter = {
+      type: settings.adapter
+    };
+  }
+
+  let Store = smartRequire(settings.store.type);
 
   /**
    * @type {Store}
    */
-  let store;
+  let store = new Store(settings.store, settings.name);
 
-  if (settings.store.type) {
-    let Store = smartRequire(settings.store.type);
-    store = new Store(settings.store, settings.name);
-  } else {
-    throw new Error('No state module');
-  }
+  /**
+   * @type {Bot}
+   */
+  let bot = smartRequire(settings.bot.path);
 
   /**
    * @type {function}
@@ -72,22 +81,16 @@ module.exports = function (settings) {
   let botControl;
 
   if (bot.botControl) {
-    botControl = smartRequire(bot.botControl)(bot, store);
+    botControl = smartRequire(bot.botControl)(bot, store, settings.bot);
   } else {
-    throw new Error('No botControl module');
+    throw new Error('Not specified botControl in bot file');
   }
 
+  let Adapter = smartRequire(settings.adapter.type);
   /**
    * @type {function}
    */
-  let adapter;
-
-  if (settings.store.type) {
-    let Adapter = smartRequire(settings.adapter.type);
-    adapter = Adapter(settings.adapter, botControl);
-  } else {
-    throw new Error('No adapter module');
-  }
+  let adapter = Adapter(settings.adapter, botControl);
 
   return adapter;
 };
