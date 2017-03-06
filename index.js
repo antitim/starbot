@@ -23,8 +23,7 @@ function smartRequire (id) {
   let firstChar = id.slice(0, 1);
 
   if (firstChar === '.' || firstChar === '/') {
-    let dirname = path.dirname(require.main.filename);
-    return require(path.resolve(dirname, id));
+    return require(path.resolve(process.cwd(), id));
   } else {
     return require(id);
   }
@@ -81,7 +80,7 @@ module.exports = function (settings) {
   let botControl;
 
   if (bot.botControl) {
-    botControl = smartRequire(bot.botControl)(bot, store, settings.bot);
+    botControl = smartRequire(bot.botControl)(bot, store);
   } else {
     throw new Error('Not specified botControl in bot file');
   }
