@@ -2,8 +2,27 @@
 
 ## About
 
-Starbot is a tool to launch a unified bots under different social platforms. 
-Starbot functionality can be expanded by external modules.
+Starbot is a lightweight framework to quickly and easily create a bot for the different social platforms.
+The framework extends the functionality of the plugins. The framework only manages the modules.
+
+![Starbot](doc/starbot.png)
+
+### Types of modules
+Modules storage:
+
+- [starbot-store-redis](https://github.com/antitim/starbot-store-redis)
+- [starbot-store-object](https://github.com/antitim/starbot-store-object)
+
+Modules adapters:
+
+- [starbot-vk-adapter](https://github.com/antitim/starbot-vk-adapter)
+- [starbot-telegram-adapter](https://github.com/antitim/starbot-telegram-adapter)
+- [starbot-facebook-adapter](https://github.com/antitim/starbot-facebook-adapter)
+
+Modules to control the bot:
+
+- [starbot-story-bot](https://github.com/antitim/starbot-story-bot)
+- [starbot-ktotam-bot](https://github.com/antitim/starbot-ktotam-bot)
 
 ## Installation
 
@@ -49,7 +68,7 @@ app.use('/bot/telegram', bot1);
 app.use('/bot/vk', bot2);
 
 app.listen(80, function () {
-	console.log('Example app listening on port 80!');
+  console.log('Example app listening on port 80!');
 });
 ```
 
