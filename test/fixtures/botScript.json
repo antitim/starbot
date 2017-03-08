@@ -1,0 +1,4 @@
+{
+  "botControl": "./test/fixtures/botControl",
+  "story": "Some story"
+}

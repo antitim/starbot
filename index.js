@@ -52,7 +52,7 @@ module.exports = function (settings) {
 
   if (settings.bot.constructor === String) {
     settings.bot = {
-      path: settings.adapter
+      path: settings.bot
     };
   }
 

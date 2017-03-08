@@ -1,9 +1,9 @@
-# Starbot [![NPM version][npm-image]][npm-url]
+# Starbot [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 ## About
 
-Starbot is a lightweight framework to quickly and easily create a bot for the different social platforms.
-The framework extends the functionality of the plugins. The framework only manages the modules.
+Starbot is a lightweight framework for quickly and easily creating bots for different social platforms.
+Plug-ins expand functionality of the framework. The framework only manages the modules.
 
 ![Starbot](doc/starbot.png)
 
@@ -79,3 +79,5 @@ MIT © [antitim](http://vk.com/antitim)
 
 [npm-image]: https://badge.fury.io/js/starbot.svg
 [npm-url]: https://npmjs.org/package/starbot
+[travis-image]: https://travis-ci.org/antitim/starbot.svg?branch=master
+[travis-url]: https://travis-ci.org/antitim/starbot

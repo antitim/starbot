@@ -1,7 +1,7 @@
 {
   "name": "starbot",
-  "version": "2.0.1",
-  "description": "Bot Platform",
+  "version": "2.0.2",
+  "description": "Lightweight framework for quickly and easily creating bots",
   "author": {
     "name": "antitim",
     "email": "antitim@yandex.ru",
@@ -13,6 +13,7 @@
   ],
   "repository": "antitim/starbot",
   "scripts": {
+    "test": "_mocha",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
@@ -24,11 +25,13 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^3.9.1",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
     "lint-staged": "^3.3.1",
+    "mocha": "^3.2.0",
     "pre-commit": "^1.2.2"
   }
 }
