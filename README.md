@@ -12,6 +12,7 @@ Modules storage:
 
 - [starbot-store-redis](https://github.com/antitim/starbot-store-redis)
 - [starbot-store-object](https://github.com/antitim/starbot-store-object)
+- [starbot-store-mongo](https://github.com/antitim/starbot-store-mongo)
 
 Modules adapters:
 
