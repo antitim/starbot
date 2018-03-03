@@ -5,73 +5,53 @@ require('chai').should();
 const Starbot = require('..');
 
 describe('Starbot', () => {
-  it('store error', async () => {
+  it('store error', () => {
     try {
-      Starbot({
-        name: 'BotTest'
-      });
+      Starbot();
     } catch (err) {
       err.message.should.equal('Not specified store in settings');
     }
   });
 
-  it('bot error', async () => {
+  it('bot error', () => {
     try {
       Starbot({
-        name: 'BotTest',
-        store: {
-          type: './test/fixtures/store'
-        }
+        store: {}
       });
     } catch (err) {
       err.message.should.equal('Not specified bot in settings');
     }
   });
 
-  it('adapter error', async () => {
+  it('adapter error', () => {
     try {
       Starbot({
-        name: 'BotTest',
-        bot: './test/fixtures/botScript',
-        store: {
-          type: './test/fixtures/store'
-        }
+        bot: {},
+        store: {}
       });
     } catch (err) {
       err.message.should.equal('Not specified adapter in settings');
     }
   });
 
-  it('initialization', async () => {
+  it('initialization', () => {
     Starbot({
-      name: 'BotTest',
-      bot: './test/fixtures/botScript',
-      store: './test/fixtures/store',
-      adapter: './test/fixtures/adapter'
+      bot: {},
+      store: {},
+      adapter: {}
     });
   });
 
   it('communication', async () => {
     const bot = Starbot({
-      name: 'BotTest',
-      bot: './test/fixtures/botScript',
-      store: {
-        type: './test/fixtures/store',
-        settings: 'storeSettings'
-      },
-      adapter: {
-        type: './test/fixtures/adapter',
-        settings: 'adapterSettings'
-      }
+      bot: { key: 'botValue' },
+      store: { get: () => {} },
+      adapter: {}
     });
 
     bot.should.deep.equal = {
-      adapter: 'adapterSettings',
-      store: {
-        botName: 'BotTest',
-        settings: 'storeSettings'
-      },
-      botStory: 'Some story'
+      store: { get: () => {} },
+      bot: { key: 'botValue' }
     };
   });
 });

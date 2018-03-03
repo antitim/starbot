@@ -27,45 +27,35 @@ Modules to control the bot:
 ## Installation
 
 ```sh
-$ npm install --save starbot
+$ npm install --save starbot starbot-store-redis starbot-vk-adapter starbot-story-bot
 ```
 
 ## Using
 
 ```js
 const app = require('express')();
-const Starbot = require('starbot');
 const bodyParser = require('body-parser');
 
-const bot1 = Starbot({
-  name: 'BotSmartTelegram',
-  bot: './path/to/bot',
-  store: {
-    type: 'starbot-store-object'
-  },
-  adapter: {
-    type: 'starbot-telegram-adapter',
-    token: 'token'
-  }
-});
+const Starbot = require('starbot');
+const StoreRedis = require('starbot-store-redis');
+const AdapterVk = require('starbot-vk-adapter');
+const StoryBot = require('starbot-story-bot');
 
-const bot2 = Starbot({
-  name: 'BotSmartVk',
-  bot: './path/to/bot',
-  store: {
-    type: 'starbot-store-object'
-  },
-  adapter: {
-    type: 'starbot-vk-adapter',
-    token: 'token',
-    groupId: 'groupId',
-    confirmCode: 'confirmCode'
-  }
+
+const bot1 = Starbot({
+  bot: new StoryBot({
+    ...configBot,
+  }),
+  store: new StoreRedis({
+    ...configStore,
+  }),
+  adapter: new AdapterVk({
+    ...configAdapter,
+  })
 });
 
 app.use(bodyParser.json());
 app.use('/bot/telegram', bot1);
-app.use('/bot/vk', bot2);
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');
