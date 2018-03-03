@@ -45,13 +45,19 @@ describe('Starbot', () => {
   it('communication', async () => {
     const bot = Starbot({
       bot: { key: 'botValue' },
-      store: { get: () => {} },
+      store: {
+        get: () => {}
+      },
       adapter: {}
     });
 
     bot.should.deep.equal = {
-      store: { get: () => {} },
-      bot: { key: 'botValue' }
+      bot: {
+        store: {
+          get: () => {}
+        },
+        key: 'botValue'
+      }
     };
   });
 });

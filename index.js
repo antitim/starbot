@@ -9,8 +9,8 @@ module.exports = function (settings) {
   if (!bot) throw new Error('Not specified bot in settings');
   if (!adapter) throw new Error('Not specified adapter in settings');
 
+  bot.store = store;
   adapter.bot = bot;
-  adapter.store = store;
 
   return adapter;
 };
