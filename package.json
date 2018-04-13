@@ -1,11 +1,10 @@
 {
   "name": "starbot",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "Lightweight framework for quickly and easily creating bots",
   "author": {
     "name": "antitim",
-    "email": "antitim@yandex.ru",
-    "url": ""
+    "email": "antitim@yandex.ru"
   },
   "main": "index.js",
   "keywords": [

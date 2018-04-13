@@ -51,18 +51,10 @@ describe('Starbot', () => {
         get: () => {}
       },
       adapter: {
-        key: 'adapterKey'
+        middleware: 'middleware'
       }
     });
 
-    bot.should.deep.equal = {
-      key: 'adapterKey',
-      bot: {
-        store: {
-          get: () => {}
-        },
-        key: 'botValue'
-      }
-    };
+    bot.should.equal = 'middleware';
   });
 });

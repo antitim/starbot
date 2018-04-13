@@ -12,5 +12,5 @@ module.exports = function (settings) {
   bot.store = store;
   adapter.bot = bot;
 
-  return adapter;
+  return adapter.middleware;
 };
